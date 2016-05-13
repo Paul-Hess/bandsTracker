@@ -100,9 +100,28 @@ public class BandTest {
 	}
 
 	@Test 
-	public void remove_deletesInstanceOfBand_0() {
+	public void remove_deletesInstanceOfBand_0() {	
 		testBand.save();
 		testBand.remove();
 		assertEquals(Band.all().size(), 0);
+	}
+
+
+	@Test 
+	public void addToVenue_addInstanceAssociationWithVenue_bands_venues() {
+		testBand.save();
+		Venue testVenue = new Venue("venue name", "location");
+		testVenue.save();
+		testBand.addToVenue(testVenue);
+		assertEquals(testBand.getVenues().get(0), testVenue);
+	}
+
+	@Test 
+	public void getVenues_returnsListOfAsociatedVenues_List() {
+		testBand.save();
+		Venue testVenue = new Venue("venue name", "location");
+		testVenue.save();
+		testBand.addToVenue(testVenue);
+		assertEquals(testBand.getVenues().size(), 1);
 	}
 }

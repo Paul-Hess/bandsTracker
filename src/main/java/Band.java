@@ -25,6 +25,7 @@ public class Band {
 	}
 
 	// getters
+
 	public String getName() {
 		return this.band_name;
 	}
@@ -49,6 +50,16 @@ public class Band {
 				.getKey();
 		}
 	} 
+
+	public void addToVenue(Venue newVenue) {
+		try(Connection con = DB.sql2o.open()) {
+			String sql = "INSERT INTO bands_venues (band_id, venue_id) VALUES (:band_id, :venue_id);";
+			con.createQuery(sql)
+				.addParameter("band_id", this.id)
+				.addParameter("venue_id", newVenue.getId())
+				.executeUpdate();
+		}
+	}
 
 	// read 
 
@@ -82,6 +93,15 @@ public class Band {
 			return con.createQuery(sql)
 				.addParameter("query", "%" + query + "%" )
 				.executeAndFetch(Band.class);
+		}
+	}
+
+	public List<Venue> getVenues() {
+		try(Connection con = DB.sql2o.open()) {
+			String joinQuery = "SELECT venues.* FROM bands JOIN bands_venues ON (bands.id = bands_venues.band_id) JOIN venues ON (bands_venues.venue_id = venues.id) WHERE bands.id=:id;";
+			return con.createQuery(joinQuery)
+				.addParameter("id", this.id)
+				.executeAndFetch(Venue.class);
 		}
 	}
 
