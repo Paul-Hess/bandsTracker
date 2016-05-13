@@ -1,5 +1,19 @@
 <h2> Browse all bands</h2>
 
+<h2>Search: </h2>
+<form action="/bands/search" method="post">
+
+	<label for="search-param">Search By: </label>
+	<select id="search-param" name="search-param">
+		<option value="band_name">Name</option>
+		<option value="band_genre">Genre</option>
+	</select>
+	
+	<label for="query">Search: </label>
+	<input type="text" id="query" name="query">
+
+	<button type="submit" id="band-search">GO</button>
+</form>
 #foreach($band in $bands)
 	<a href="/band/$band.getId()">$band.getName()</a>
 #end

@@ -165,4 +165,22 @@ public class AppTest extends FluentTest {
     submit("#remove-venue");
     assertThat(pageSource()).doesNotContain("venue name");
   }
+
+  @Test 
+  public void findsSearchedForBandsByName() {
+    testBand.save();
+    goTo("http://localhost:4567/bands");
+    fillSelect("#search-param").withText("Name");
+    fill("#query").with("ban");
+    assertThat(pageSource()).contains("band name");
+  }
+
+  @Test 
+  public void findsSearchedForBandsByGenre() {
+    testBand.save();
+    goTo("http://localhost:4567/bands");
+    fillSelect("#search-param").withText("Genre");
+    fill("#query").with("gen");
+    assertThat(pageSource()).contains("genre");
+  }
 }
