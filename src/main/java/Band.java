@@ -141,4 +141,14 @@ public class Band {
 		}
 	}
 
+	public void removeVenue(Venue venue) {
+		try(Connection con = DB.sql2o.open()) {
+			String deleteJoin = "DELETE FROM bands_venues WHERE band_id=:id AND venue_id=:venue_id;";
+			con.createQuery(deleteJoin)
+				.addParameter("id", this.getId())
+				.addParameter("venue_id", venue.getId())
+				.executeUpdate();
+		}
+	}
+
 }

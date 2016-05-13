@@ -102,8 +102,12 @@ public class BandTest {
 	@Test 
 	public void remove_deletesInstanceOfBand_0() {	
 		testBand.save();
+		Venue testVenue = new Venue("venue name", "location");
+		testVenue.save();
+		testBand.addToVenue(testVenue);
 		testBand.remove();
 		assertEquals(Band.all().size(), 0);
+		assertEquals(testBand.getVenues().size(), 0);
 	}
 
 
@@ -123,5 +127,15 @@ public class BandTest {
 		testVenue.save();
 		testBand.addToVenue(testVenue);
 		assertEquals(testBand.getVenues().size(), 1);
+	}
+
+	@Test 
+	public void removeVenue_removesVenueAssociation_0() {
+		testBand.save();
+		Venue testVenue = new Venue("venue name", "location");
+		testVenue.save();
+		testBand.addToVenue(testVenue);
+		testBand.removeVenue(testVenue);
+		assertEquals(testBand.getVenues().size(), 0);
 	}
 }
