@@ -64,9 +64,22 @@ public class App {
     }, new VelocityTemplateEngine()); 
 
 
-    post("/band/:band_id/edit", (request, response) -> {
+    post("/band/:band_id/edit-name", (request, response) -> {
+    	int band_id = Integer.parseInt(request.params("band_id"));
+    	Band currentBand = Band.findById(band_id);
+    	String name = request.queryParams("band-name");
+    	currentBand.update("band_name", name);
+    	response.redirect(request.url());
     	return null;
-	
+    }); 
+
+    post("/band/:band_id/edit-genre", (request, response) -> {
+    	int band_id = Integer.parseInt(request.params("band_id"));
+    	Band currentBand = Band.findById(band_id);
+    	String genre = request.queryParams("band-genre");
+    	currentBand.update("band_genre", genre);
+    	response.redirect(request.url());
+    	return null;
     }); 
 
     post("/band/:band_id/delete", (request, response) -> {

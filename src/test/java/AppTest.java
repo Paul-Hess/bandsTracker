@@ -105,7 +105,31 @@ public class AppTest extends FluentTest {
   @Test 
   public void allBandsAreListed() {
     testBand.save();
-    goTo("http://localhost:4567/bands");
+    goTo("http://localhost:4567");
+    click("a", withText("Browse bands"));
     assertThat(pageSource()).contains("band name");  
+  }
+
+
+  @Test 
+  public void updatesBandName() {
+    testBand.save();
+    String url = String.format("http://localhost:4567/band/%d/edit", testBand.getId());
+    goTo(url);
+    fill("#band-name").with("new name");
+    submit("#edit-name");
+    goTo("http://localhost:4567/band/" + testBand.getId());
+    assertThat(pageSource()).contains("new name");
+  }
+
+  @Test 
+  public void updatesBandGenre() {
+    testBand.save();
+    String url = String.format("http://localhost:4567/band/%d/edit", testBand.getId());
+    goTo(url);
+    fill("#band-genre").with("new genre");
+    submit("#edit-genre");
+    goTo("http://localhost:4567/band/" + testBand.getId());
+    assertThat(pageSource()).contains("new genre");
   }
 }

@@ -9,3 +9,21 @@
 	#end
 	<button type="submit">Add Venue</button>
 </form>
+
+<h4>Edit this bands name: </h4>
+<form action="/band/$currentBand.getId()/edit-name" method="post">
+
+		<label for="band-name">New Name</label>
+		<input type="text" id="band-name" name="band-name" value="$currentBand.getName()">
+
+	<button type="submit" id="edit-name">Edit Name</button>
+</form>
+
+<h4>Edit this bands genre: </h4>
+<form action="/band/$currentBand.getId()/edit-genre" method="post">
+		
+		<label for="band-genre">New Genre</label>
+		<input type="text" id="band-genre" name="band-genre" value="$currentBand.getGenre()">
+
+	<button type="submit" id="edit-genre">Edit Genre</button>
+</form>
