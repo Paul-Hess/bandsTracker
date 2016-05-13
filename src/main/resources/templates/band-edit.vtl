@@ -1,0 +1,11 @@
+<h2>Edit band name details: </h2>
+
+
+<h4>Add venues to this band: </h4>
+<form action="/band/$currentBand.getId()/add-venue" method="post">
+	#foreach($venue in $venues)
+		<label for="$venue.getId()">$venue.getName()</label>
+		<input type="checkbox" name="venue-boxes" id="$venue.getId()" value="$venue.getId()">
+	#end
+	<button type="submit">Add Venue</button>
+</form>

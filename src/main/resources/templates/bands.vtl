@@ -1,0 +1,5 @@
+<h2> Browse all bands</h2>
+
+#foreach($band in $bands)
+	<a href="/band/$band.getId()">$band.getName()</a>
+#end

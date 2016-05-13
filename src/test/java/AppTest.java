@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 
 public class AppTest extends FluentTest {
   public WebDriver webDriver = new HtmlUnitDriver();
+  private Band testBand = new Band("band name", "genre");
 
   @Override
   public WebDriver getDefaultDriver() {
@@ -39,5 +40,72 @@ public class AppTest extends FluentTest {
     click("a", withText("Add a band"));
     assertThat(pageSource()).contains("Add your band here: ");
   }
+
+
+  @Test 
+  public void allBandsRoute() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Browse bands"));
+    assertThat(pageSource()).contains("Browse all bands");
+  }
+
+  @Test public void createVenueRoute() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Add a venue"));
+    assertThat(pageSource()).contains("Add your venue here: ");
+  }
+
+  @Test 
+  public void dynamicBandRoute() {
+    testBand.save();
+    String url = String.format("http://localhost:4567/band/%d", testBand.getId());
+    goTo(url);
+    assertThat(pageSource()).contains("band name");
+  }
+
+  @Test 
+  public void editBandRoute() {
+    testBand.save();
+    String url = String.format("http://localhost:4567/band/%d", testBand.getId());
+    goTo(url);
+    click("a", withText("edit this band"));
+    assertThat(pageSource()).contains("Edit band name details: ");
+  }
+
+  @Test 
+  public void allBandsLinkToBand() {
+    testBand.save();
+    goTo("http://localhost:4567/bands");
+    click("a", withText("band name"));
+    assertThat(pageSource()).contains("genre");  
+  }
+
+
 // test actions
+  @Test 
+  public void bandIsCreated() {
+    goTo("http://localhost:4567/bands/new");
+    fill("#band-name").with("bandName");
+    fill("#band-genre").with("bandGenre");
+    submit("#create-band");
+    assertThat(pageSource()).contains("bandName");
+  }
+
+  @Test 
+  public void venueIsCreated() {
+    testBand.save();
+    goTo("http://localhost:4567/venues/new");
+    fill("#venue-name").with("venueName");
+    fill("#location").with("location");
+    submit("#create-venue");
+    goTo("http://localhost:4567/band/" + testBand.getId() + "/edit");
+    assertThat(pageSource()).contains("venueName");
+  }
+
+  @Test 
+  public void allBandsAreListed() {
+    testBand.save();
+    goTo("http://localhost:4567/bands");
+    assertThat(pageSource()).contains("band name");  
+  }
 }

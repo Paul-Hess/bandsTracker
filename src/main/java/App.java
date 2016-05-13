@@ -21,25 +21,44 @@ public class App {
     	return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // post("/bands/new", (request, response) -> {
-    // 	return null;
-
-    // });
+    post("/bands/new", (request, response) -> {
+    	String name = request.queryParams("band-name");
+    	String genre = request.queryParams("band-genre");
+    	Band newBand = new Band(name, genre);
+    	newBand.save();
+    	response.redirect("/band/" + newBand.getId());
+    	return null;
+    });
 
     get("/bands", (request, response) -> {
     	Map<String, Object> model = new HashMap<String, Object>();
+
+    	model.put("bands", Band.all());
     	model.put("template", "templates/bands.vtl");
     	return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
     get("/band/:band_id", (request, response) -> {
     	Map<String, Object> model = new HashMap<String, Object>();
+    	
+    	int band_id = Integer.parseInt(request.params("band_id"));
+    	Band currentBand = Band.findById(band_id);
+    	model.put("currentBand", currentBand);
+
+
     	model.put("template", "templates/band.vtl");
     	return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
     get("/band/:band_id/edit", (request, response) -> {
     	Map<String, Object> model = new HashMap<String, Object>();
+
+    	int band_id = Integer.parseInt(request.params("band_id"));
+    	Band currentBand = Band.findById(band_id);
+    	model.put("currentBand", currentBand);
+
+    	model.put("venues", Venue.all());
+
     	model.put("template", "templates/band-edit.vtl");
     	return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine()); 
@@ -73,8 +92,12 @@ public class App {
     }, new VelocityTemplateEngine());
 
     post("/venues/new", (request, response) -> {
+    	String venueName = request.queryParams("venue-name");
+    	String location = request.queryParams("location");
+    	Venue newVenue = new Venue(venueName, location);
+    	newVenue.save();
+    	response.redirect("/bands");
     	return null;
-
     });
   }
 
