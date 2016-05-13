@@ -35,4 +35,10 @@ public class VenueTest {
   public void all_initializesAsEmptyList_List() {
   	assertEquals(Venue.all().size(), 0);
   }
+
+  @Test 
+  public void save_savesInstanceOfVenue_true() {
+  	testVenue.save();
+  	assertEquals(Venue.all().get(0), testVenue);
+  }
 }
