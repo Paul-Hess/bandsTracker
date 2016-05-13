@@ -14,4 +14,14 @@ public class VenueTest {
   public void Venue_initializesCorrectly_true() {
   	assertTrue(testVenue instanceof Venue);
   }
+
+  @Test 
+  public void getId_returnsId_int() {
+  	assertEquals(testVenue.getId(), 0);
+  }
+
+  @Test 
+  public void getName_returnsName_String() {
+  	assertEquals(testVenue.getName(), "venue name");
+  }
 }

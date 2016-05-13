@@ -9,4 +9,12 @@ public class Venue {
 	public Venue(String venue_name) {
 		this.venue_name = venue_name;
 	}
+
+	public int getId() {
+		return this.id;
+	}
+
+	public String getName() {
+		return this.venue_name;
+	}
 }
