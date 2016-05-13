@@ -10,4 +10,14 @@ public class BandTest {
 	public void Band_initializesCorrectly_true() {
 		assertTrue(testBand instanceof Band);
 	}
+
+	@Test 
+	public void getName_returnsNameOfBand_String() {
+		assertEquals(testBand.getName(), "band name");
+	}
+
+	@Test 
+	public void getGenre_returnsGenreOfBand_String() {
+		assertEquals(testBand.getGenre(), "band genre");
+	}
 }

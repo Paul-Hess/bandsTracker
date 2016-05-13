@@ -11,4 +11,13 @@ public class Band {
 		this.band_genre = band_genre;
 	}
 
+	// getters
+	public String getName() {
+		return this.band_name;
+	}
+
+	public String getGenre() {
+		return this.band_genre;
+	}
+
 }
