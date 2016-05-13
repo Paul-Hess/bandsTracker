@@ -37,8 +37,27 @@ public class Band {
 		return this.id;
 	}
 
-	// create 
+	// create
+
+	public void save() {
+		try(Connection con = DB.sql2o.open()) {
+			String sql = "INSERT INTO bands (band_name, band_genre) VALUES (:band_name, :band_genre);";
+			this.id = (int) con.createQuery(sql, true)
+				.addParameter("band_name", this.band_name)
+				.addParameter("band_genre", this.band_genre)
+				.executeUpdate()
+				.getKey();
+		}
+	} 
 	// read 
+
+	public static List<Band> all() {
+		try(Connection con = DB.sql2o.open()) {
+			String sql = "SELECT id, band_name, band_genre FROM bands;";
+			return con.createQuery(sql)
+				.executeAndFetch(Band.class);
+		}
+	}
 	// update
 	// delete
 

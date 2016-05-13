@@ -4,7 +4,12 @@ import org.sql2o.*;
 
 
 public class BandTest {
+
+	@Rule
+  public DatabaseRule database = new DatabaseRule();
+
 	private Band testBand = new Band("band name", "band genre");
+	private Band testBand2 = new Band("band name", "band genre");
 
 	@Test 
 	public void Band_initializesCorrectly_true() {
@@ -27,8 +32,18 @@ public class BandTest {
 	}
 
 	@Test 
-	public void equals_returnsTrueIfInstancesAreTheSame_true() {
-		Band testBand2 = new Band("band name", "band genre");
+	public void equals_returnsTrueIfInstancesAreTheSame_true() {	
 		assertTrue(testBand.equals(testBand2));
+	}
+
+	@Test 
+	public void save_savesInstanceOfBand_true() {
+		testBand.save();
+		assertTrue(Band.all().get(0).equals(testBand));
+	}
+
+	@Test 
+	public void all_initializesAsEmptyListOfAllBands_Band() {
+		assertEquals(Band.all().size(), 0);
 	}
 }
