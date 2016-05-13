@@ -43,6 +43,13 @@ public class BandTest {
 		assertTrue(Band.all().get(0).equals(testBand));
 	}
 
+
+	@Test 
+	public void save_assignsIdToObject_true() {
+		testBand.save();
+		Band savedBand = Band.all().get(0);
+		assertEquals(savedBand.getId(), testBand.getId());
+	}
 	@Test 
 	public void all_initializesAsEmptyListOfAllBands_Band() {
 		assertEquals(Band.all().size(), 0);
