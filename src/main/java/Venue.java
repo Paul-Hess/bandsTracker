@@ -24,7 +24,8 @@ public class Venue {
 		}
 	}
 
-
+// getters
+	
 	public int getId() {
 		return this.id;
 	}
@@ -37,13 +38,7 @@ public class Venue {
 		return this.location;
 	}
 
-	public static List<Venue> all() {
-		try(Connection con = DB.sql2o.open()) {
-			String sql = "SELECT id, venue_name, location FROM venues;";
-			return con.createQuery(sql)
-				.executeAndFetch(Venue.class);
-		}
-	}
+// create
 
 	public void save() {
 		try(Connection con = DB.sql2o.open()) {
@@ -56,6 +51,16 @@ public class Venue {
 		}
 	}
 
+// read
+
+	public static List<Venue> all() {
+		try(Connection con = DB.sql2o.open()) {
+			String sql = "SELECT id, venue_name, location FROM venues;";
+			return con.createQuery(sql)
+				.executeAndFetch(Venue.class);
+		}
+	}
+
 	public static Venue findById(int id) {
 		try(Connection con = DB.sql2o.open()) {
 			String sql = "SELECT * FROM venues WHERE id=:id;";
@@ -65,5 +70,15 @@ public class Venue {
 		}
 	}
 
+	public static List<Venue> findByLocation(String query) {
+		try(Connection con = DB.sql2o.open()) {
+			String sql = "SELECT * FROM venues WHERE location=:location;";
+			return con.createQuery(sql)
+				.addParameter("location", query)
+				.executeAndFetch(Venue.class);
+
+		}
+	}
+ 
 
 }

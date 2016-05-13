@@ -59,4 +59,10 @@ public class VenueTest {
   	testVenue.save();
   	assertEquals(Venue.findById(testVenue.getId()), testVenue);
   }
+
+  @Test 
+  public void findByLocation_returnsInstanceOfVenueByLocation_Venue() {
+  	testVenue.save();
+  	assertEquals(Venue.findByLocation("location").get(0).getName(), testVenue.getName());
+  }
 }
