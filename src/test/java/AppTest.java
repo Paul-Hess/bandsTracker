@@ -29,6 +29,15 @@ public class AppTest extends FluentTest {
   @Test
   public void rootTest() {
     goTo("http://localhost:4567/");
+    assertThat(pageSource()).contains("Band Tracker");
+    assertThat(pageSource()).contains("Do you know where your bands are?");
   }
-
+  // test routes
+  @Test 
+  public void createBandTestRoute() {
+    goTo("http://localhost:4567/");
+    click("a", withText("Add a band"));
+    assertThat(pageSource()).contains("Add your band here: ");
+  }
+// test actions
 }
