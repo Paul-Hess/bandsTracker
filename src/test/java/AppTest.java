@@ -73,7 +73,7 @@ public class AppTest extends FluentTest {
   }
 
   @Test 
-  public void allBandsLinkToBand() {
+  public void allBandsLinkToDynamicRoute() {
     testBand.save();
     goTo("http://localhost:4567/bands");
     click("a", withText("band name"));
@@ -110,7 +110,6 @@ public class AppTest extends FluentTest {
     assertThat(pageSource()).contains("band name");  
   }
 
-
   @Test 
   public void updatesBandName() {
     testBand.save();
@@ -141,5 +140,29 @@ public class AppTest extends FluentTest {
     submit("#delete-band");
     goTo("http://localhost:4567/bands");
     assertThat(pageSource()).doesNotContain("band name");
+  }
+
+  @Test 
+  public void addsVenueToBand() {
+    testBand.save();
+    Venue testVenue = new Venue("venue name", "location");
+    testVenue.save();
+    String url = String.format("http://localhost:4567/band/%d/edit", testBand.getId());
+    goTo(url);
+    find("#venue-name").click();
+    submit("#add-band-venue");
+    assertThat(pageSource()).contains("venue name");
+  }
+
+  @Test 
+  public void removesVenueFromBand() {
+    testBand.save();
+    Venue testVenue = new Venue("venue name", "location");
+    testVenue.save();
+    testBand.addToVenue(testVenue);
+    String url = String.format("http://localhost:4567/band/%d/edit", testBand.getId());
+    find("#venue-name-delete");
+    submit("#remove-venue");
+    assertThat(pageSource()).doesNotContain("venue name");
   }
 }

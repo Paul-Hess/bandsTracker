@@ -4,10 +4,10 @@
 <h4>Add venues to this band: </h4>
 <form action="/band/$currentBand.getId()/add-venue" method="post">
 	#foreach($venue in $venues)
-		<label for="$venue.getId()">$venue.getName()</label>
-		<input type="checkbox" name="venue-boxes" id="$venue.getId()" value="$venue.getId()">
+		<label for="$venue.getName().replace(' ', '-')">$venue.getName()</label>
+		<input type="checkbox" name="venue-boxes" id="$venue.getName().replace(' ', '-')" value="$venue.getId()">
 	#end
-	<button type="submit">Add Venue</button>
+	<button type="submit" id="add-band-venue">Add Venue</button>
 </form>
 
 <h4>Edit this bands name: </h4>
@@ -32,3 +32,14 @@
 <form action="/band/$currentBand.getId()/delete" method="post">
 	<button type="submit" id="delete-band">Delete</button>
 </form>
+
+<h4>Remove venues from this band: </h4>
+#if($currentBand.getVenues().size() > 0)
+<form action="/band/$currentBand.getId()/add-venue" method="post">
+	#foreach($venue in $currentBand.getVenues())
+		<label for="$venue.getName().replace(' ', '-')-delete">$venue.getName()</label>
+		<input type="checkbox" name="venue-boxes-delete" id="$venue.getName().replace(' ', '-')-delete" value="$venue.getId()">
+	#end
+	<button type="submit" id="remove-venue">Add Venue</button>
+</form>
+#end

@@ -45,6 +45,7 @@ public class App {
     	Band currentBand = Band.findById(band_id);
     	model.put("currentBand", currentBand);
 
+    	model.put("bandVenues", currentBand.getVenues());
 
     	model.put("template", "templates/band.vtl");
     	return new ModelAndView(model, layout);
@@ -91,14 +92,30 @@ public class App {
     });
 
     post("/band/:band_id/add-venue", (request, response) -> {
+    	int band_id = Integer.parseInt(request.params("band_id"));
+    	Band currentBand = Band.findById(band_id);
+    	String[] venuesToAdd = request.queryParamsValues("venue-boxes");
+    	for(String venueId : venuesToAdd) {
+    		int id = Integer.parseInt(venueId);
+    		Venue currentVenue = Venue.findById(id);
+    		currentBand.addToVenue(currentVenue);
+    	}
+    	response.redirect("/band/" + currentBand.getId());
     	return null;
-
     }); 
 
 
     post("/band/:band_id/delete-venue", (request, response) -> {
+    	int band_id = Integer.parseInt(request.params("band_id"));
+    	Band currentBand = Band.findById(band_id);
+    	String[] venuesToRemove = request.queryParamsValues("venue-boxes-delete");
+    	for(String venueId : venuesToRemove) {
+    		int id = Integer.parseInt(venueId);
+    		Venue currentVenue = Venue.findById(id);
+    		currentBand.removeVenue(currentVenue);
+    	}
+    	response.redirect("/bands/" + currentBand.getId());
     	return null;
-
     });
 
     get("/venues/new", (request, response) -> {
