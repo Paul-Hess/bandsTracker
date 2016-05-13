@@ -1,12 +1,15 @@
-import org.sql2o.*;
-import org.fluentlenium.adapter.FluentTest;
 import static org.fluentlenium.core.filter.FilterConstructor.*;
+import org.fluentlenium.adapter.FluentTest;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.fluentlenium.core.filter.FilterConstructor.*;
+import org.sql2o.*;
+import org.junit.*;
+import static org.junit.Assert.*;
+
 
 public class AppTest extends FluentTest {
   public WebDriver webDriver = new HtmlUnitDriver();
@@ -16,21 +19,9 @@ public class AppTest extends FluentTest {
     return webDriver;
   }
 
+  @Rule
+  public DatabaseRule database = new DatabaseRule();
 
-  @Before
-  public void setUp() {
-    DB.sql2o = new Sql2o("jdbc:postgresql://localhost:5432/best_restaurant_test", null, null);
-  }
-
-  @After
-  public void tearDown() {
-    try(Connection con = DB.sql2o.open()) {
-      String deleteCuisinesQuery = "DELETE FROM cuisines *;";
-      // String deleteRestaurantsQuery = "DELETE FROM restaurants *;";
-      con.createQuery(deleteCuisineQuery).executeUpdate();
-      // con.createQuery(deleteRestaurantsQuery).executeUpdate();
-    }
-  }
 
   @ClassRule
   public static ServerRule server = new ServerRule();
