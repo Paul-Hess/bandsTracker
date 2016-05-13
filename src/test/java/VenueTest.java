@@ -24,4 +24,15 @@ public class VenueTest {
   public void getName_returnsName_String() {
   	assertEquals(testVenue.getName(), "venue name");
   }
+
+  @Test 
+  public void equals_returnsTrueIfInstancesAreTheSame_true() {
+  	Venue testVenue2 = new Venue("venue name");
+  	assertTrue(testVenue2.equals(testVenue));
+  }
+
+  @Test 
+  public void all_initializesAsEmptyList_List() {
+  	assertEquals(Venue.all().size(), 0);
+  }
 }

@@ -10,11 +10,30 @@ public class Venue {
 		this.venue_name = venue_name;
 	}
 
+	@Override 
+	public boolean equals(Object otherVenue) {
+		if(!(otherVenue instanceof Venue)) {
+			return false;
+		} else {
+			Venue newVenue = (Venue) otherVenue;
+			return newVenue.getName().equals(this.getName()) &&
+			newVenue.getId() == this.getId();
+		}
+	}
+
 	public int getId() {
 		return this.id;
 	}
 
 	public String getName() {
 		return this.venue_name;
+	}
+
+	public static List<Venue> all() {
+		try(Connection con = DB.sql2o.open()) {
+			String sql = "SELECT id, venue_name FROM venues;";
+			return con.createQuery(sql)
+				.executeAndFetch(Venue.class);
+		}
 	}
 }
