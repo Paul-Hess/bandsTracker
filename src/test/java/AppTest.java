@@ -132,4 +132,14 @@ public class AppTest extends FluentTest {
     goTo("http://localhost:4567/band/" + testBand.getId());
     assertThat(pageSource()).contains("new genre");
   }
+
+  @Test
+  public void deletesBand() {
+    testBand.save();
+    String url = String.format("http://localhost:4567/band/%d/edit", testBand.getId());
+    goTo(url);
+    submit("#delete-band");
+    goTo("http://localhost:4567/bands");
+    assertThat(pageSource()).doesNotContain("band name");
+  }
 }

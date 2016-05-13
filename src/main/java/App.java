@@ -83,8 +83,11 @@ public class App {
     }); 
 
     post("/band/:band_id/delete", (request, response) -> {
+    	int band_id = Integer.parseInt(request.params("band_id"));
+    	Band currentBand = Band.findById(band_id);
+    	currentBand.remove();
+    	response.redirect("/");
     	return null;
-
     });
 
     post("/band/:band_id/add-venue", (request, response) -> {
