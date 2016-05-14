@@ -1,4 +1,4 @@
-# java_template
+# fband tracker
 
 
 
@@ -6,7 +6,7 @@
 
 ## Description
 
-template for basic student project file structure
+a practice in java
 
 ## Setup/Installation Requirements
 
@@ -17,12 +17,19 @@ template for basic student project file structure
 ```
 $ postgres
 ```
-* _Open a new tab in terminal and create the `repo_db_name` database:_
+* _Open a new tab in terminal and create the `band_tracker` database:_
 ```
 $ psql
-$ CREATE DATABASE repo_db_name;
-$ psql repo_db_name < repo_db_name.sql
+$ CREATE DATABASE band_tracker;
+$ psql band_tracker < bands_venues.sql
 ```
+Manual database setup:
+CREATE TABLE bands (id serial PRIMARY KEY, band_name varchar NOT NULL, band_genre varchar);
+CREATE TABLE venues (id serial PRIMARY KEY, venue_name varchar NOT NULL, location varchar);
+CREATE TABLE bands_venues (id serial PRIMARY KEY, band_id NOT NULL, venue_id NOT NULL);
+
+for tests to pass CREATE DATABASE band_tracker_test WITH TEMPLATE band_tracker;
+
 * _Navigate back to the directory where this repository has been cloned and run gradle:_
 ```
 $ gradle run
