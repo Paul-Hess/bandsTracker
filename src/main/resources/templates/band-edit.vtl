@@ -35,8 +35,8 @@
 	<button type="submit" id="delete-band">Delete</button>
 </form>
 
-<h4>Remove venues from this band: </h4>
 #if($currentBand.getVenues().size() > 0)
+<h4>Remove venues from this band: </h4>
 <form action="/band/$currentBand.getId()/add-venue" method="post">
 	#foreach($venue in $currentBand.getVenues())
 		<label for="$venue.getName().replace(' ', '-')-delete">$venue.getName()</label>
