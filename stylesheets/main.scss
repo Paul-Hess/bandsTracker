@@ -42,10 +42,15 @@
     margin: auto;
     align-items: center;
     width: 20vw;
-    label, input, select {
+    label:not(.checkbox label), input:not(.checkbox input), select {
       width: 80%;
     }
   }
+  
+  .checkbox {
+    width: 100%;
+  }
+
   a {
     margin: auto;
   }

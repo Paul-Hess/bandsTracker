@@ -448,8 +448,11 @@ form {
   margin: auto;
   align-items: center;
   width: 20vw; }
-  form label, form input, form select {
+  form label:not(.checkbox label), form input:not(.checkbox input), form select {
     width: 80%; }
+
+.checkbox {
+  width: 100%; }
 
 a {
   margin: auto; }
