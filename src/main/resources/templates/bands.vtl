@@ -1,19 +1,29 @@
 <h2> Browse all bands</h2>
+<div class="band-container">
+	<div class="band-search">
+		<h2>Search by name: </h2>
+		<form action="/bands/search-name" method="post">
+			
+			<label for="query-name">Search Name: </label>
+			<input type="text" id="query-name" name="query-name">
 
-<h2>Search: </h2>
-<form action="/bands/search" method="post">
+			<button type="submit" id="name-search">GO</button>
+		</form> 
 
-	<label for="search-param">Search By: </label>
-	<select id="search-param" name="search-param">
-		<option value="band_name">Name</option>
-		<option value="band_genre">Genre</option>
-	</select>
+		<h2>Search by genre: </h2>
+		<form action="/bands/search-genre" method="post">
+
+			
+			<label for="query-genre">Search Genre: </label>
+			<input type="text" id="query-genre" name="query-genre">
+
+			<button type="submit" id="genre-search">GO</button>
+		</form> 
+	</div>
+	<div class="bands">
+		#foreach($band in $bands)
+			<a href="/band/$band.getId()">$band.getName()</a>
+		#end
+	</div>
 	
-	<label for="query">Search: </label>
-	<input type="text" id="query" name="query">
-
-	<button type="submit" id="band-search">GO</button>
-</form>
-#foreach($band in $bands)
-	<a href="/band/$band.getId()">$band.getName()</a>
-#end
+</div>

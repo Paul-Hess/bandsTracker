@@ -92,6 +92,15 @@ public class AppTest extends FluentTest {
   }
 
   @Test 
+  public void errorIsThrownOnEmptyInputBand() {
+    goTo("http://localhost:4567/bands/new");
+    fill("#band-name").with("");
+    fill("#band-genre").with("bandGenre");
+    submit("#create-band");
+    assertThat(pageSource()).contains("There were one or more errors");
+  }
+
+  @Test 
   public void venueIsCreated() {
     testBand.save();
     goTo("http://localhost:4567/venues/new");
@@ -100,6 +109,16 @@ public class AppTest extends FluentTest {
     submit("#create-venue");
     goTo("http://localhost:4567/band/" + testBand.getId() + "/edit");
     assertThat(pageSource()).contains("venueName");
+  }
+
+  @Test 
+  public void errorIsThrownOnEmptyInputVenue() {
+    testBand.save();
+    goTo("http://localhost:4567/venues/new");
+    fill("#venue-name").with("");
+    fill("#location").with("location");
+    submit("#create-venue");
+    assertThat(pageSource()).contains("There were one or more errors");
   }
 
   @Test 
@@ -170,8 +189,8 @@ public class AppTest extends FluentTest {
   public void findsSearchedForBandsByName() {
     testBand.save();
     goTo("http://localhost:4567/bands");
-    fillSelect("#search-param").withText("Name");
-    fill("#query").with("ban");
+    fill("#query-name").with("ban");
+    submit("#name-search");
     assertThat(pageSource()).contains("band name");
   }
 
@@ -179,8 +198,8 @@ public class AppTest extends FluentTest {
   public void findsSearchedForBandsByGenre() {
     testBand.save();
     goTo("http://localhost:4567/bands");
-    fillSelect("#search-param").withText("Genre");
-    fill("#query").with("gen");
+    fill("#query-genre").with("gen");
+    submit("#genre-search");
     assertThat(pageSource()).contains("genre");
   }
 }

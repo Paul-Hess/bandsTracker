@@ -1,12 +1,14 @@
 <h2>$currentBand.getName()</h2>
 <h2>genre: $currentBand.getGenre()</h2>
-
-<h2>venues: </h2>
-#foreach($venue in $bandVenues)
-	<div class="band-venue">
-		<p>$venue.getName()</p>
-		<p>$venue.getLocation()</p>
-	</div>
-#end
-
 <a href="/band/$currentBand.getId()/edit">edit this band</a>
+
+<div class="venue">
+	#foreach($venue in $bandVenues)
+	<h2>venues: </h2>
+		<div class="band-venue">
+			<p>Venue: $venue.getName()</p>
+			<p>Location: $venue.getLocation()</p>
+		</div>
+	#end
+</div>
+

@@ -1,4 +1,9 @@
 <h2> Search results: </h2> 
 #foreach($band in $bands)
 	<a href="/band/$band.getId()">$band.getName()</a>
+	$band.getGenre()
+#end
+
+#if($error) 
+	<h2> none found. try again</h2>
 #end

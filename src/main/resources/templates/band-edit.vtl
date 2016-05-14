@@ -1,5 +1,5 @@
-<h2>Edit band name details: </h2>
 
+<h2>Edit $currentBand.getName() details: </h2>
 
 <h4>Add venues to this band: </h4>
 <form action="/band/$currentBand.getId()/add-venue" method="post">
@@ -13,6 +13,7 @@
 <h4>Edit this bands name: </h4>
 <form action="/band/$currentBand.getId()/edit-name" method="post">
 
+		<h4>current: $currentBand.getName()</h4>
 		<label for="band-name">New Name</label>
 		<input type="text" id="band-name" name="band-name" value="$currentBand.getName()">
 
@@ -21,7 +22,8 @@
 
 <h4>Edit this bands genre: </h4>
 <form action="/band/$currentBand.getId()/edit-genre" method="post">
-		
+
+		<h4>current: $currentBand.getGenre()</h4>
 		<label for="band-genre">New Genre</label>
 		<input type="text" id="band-genre" name="band-genre" value="$currentBand.getGenre()">
 

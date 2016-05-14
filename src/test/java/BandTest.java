@@ -62,24 +62,24 @@ public class BandTest {
 	}
 
 	@Test 
-	public void findByParameter_returnsListOfBandsByName_List() {
+	public void findByGenre_returnsListOfBandsByGenre_List() {
 		Band testBand3 = new Band("rocka", "rolla");
 		testBand3.save();
 		Band testBand4 = new Band("not it", "genre4");
 		testBand4.save();
-		List testSearch = Band.findByParameter("band_name", "roc");
+		List<Band> testSearch = Band.findByGenre("rol");
 		assertEquals(testSearch.get(0), testBand3);
 		assertEquals(testSearch.size(), 1);
 	}
 
 	@Test 
-	public void findByParameter_returnsListOfBandsByGenre_List() {
+	public void findByName_returnsListOfBandsByName_List() {
 		Band testBand3 = new Band("rocka", "rolla");
 		testBand3.save();
 		Band testBand4 = new Band("not it", "genre4");
 		testBand4.save();
-		List testSearch = Band.findByParameter("band_genre", "4");
-		assertEquals(testSearch.get(0), testBand4);
+		List<Band> testSearch = Band.findByName("roc");
+		assertEquals(testSearch.get(0), testBand3);
 		assertEquals(testSearch.size(), 1);
 	}
 

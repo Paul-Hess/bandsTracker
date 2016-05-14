@@ -80,18 +80,22 @@ public class Band {
 		}
 	}
 
-	public static List<Band> findByParameter(String searchParam, String query) {
-		try(Connection con = 	DB.sql2o.open()) {
-			String sql = "";
-			if(searchParam == "band_name") {
-				sql = "SELECT * FROM bands WHERE band_name LIKE :query;";
-			} else if (searchParam == "band_genre") {
-				sql = "SELECT * FROM bands WHERE band_genre LIKE :query;";
-			} else {
-				sql = sql;
-			}
+	public static List<Band> findByName(String query) {
+		try(Connection con = DB.sql2o.open()) {
+			String lowered = query.toLowerCase();
+			String sql = "SELECT * FROM bands WHERE lower(band_name) LIKE :query;";
 			return con.createQuery(sql)
-				.addParameter("query", "%" + query + "%" )
+				.addParameter("query", "%" + lowered + "%" )
+				.executeAndFetch(Band.class);
+		}
+	}
+
+	public static List<Band> findByGenre(String query) {
+		try(Connection con = DB.sql2o.open()) {
+			String lowered = query.toLowerCase();
+			String sql = "SELECT * FROM bands WHERE lower(band_genre) LIKE :query;";
+			return con.createQuery(sql)
+				.addParameter("query", "%" + lowered + "%" )
 				.executeAndFetch(Band.class);
 		}
 	}
